@@ -1,26 +1,17 @@
 // import logo from './logo.svg';
 import './App.css';
-import { useEffect, useState } from 'react';
+import DataTable from './components/DataTable';
 
 function App() {
-  const [finInfo, setFinInfo] = useState([]);
-
-  useEffect(() => {
-    fetch("https://financialmodelingprep.com/api/v3/income-statement/AAPL?period=annual&apikey=iTNKjhgjW7Byv4023weEz5wt6zxX4t8S")
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      setFinInfo(data);
-    })
-    .catch((err) => {
-      console.log(err.message);
-    })
-  },[]);
 
   return (
-    <hi className="text-3xl font-bold underline flex items-center justify-center h-full">
-      Hello World!
-    </hi>
+    <div class="px-2 md:px-20 lg:px-20  flex flex-col">
+      <hi className="text-3xl font-bold underline flex items-center justify-center h-full">
+        Fin Filter  
+      </hi>
+      <DataTable/>
+    </div>
+    
   );
 }
 
