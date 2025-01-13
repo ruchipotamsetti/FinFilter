@@ -23,12 +23,12 @@ You can access the deployed version of the app at the following link: [Deployed 
 
 1. Clone this repository to your local machine:
     ```bash
-    git clone https://github.com/ruchi-potamsetti/fin-filter.git
+    git clone https://github.com/ruchipotamsetti/FinFilter.git
     ```
 2. Navigate to the project folder and install the necessary dependencies:
-   ```bash
-   cd fin-filter
-   npm install
+  ```bash
+  cd fin-filter
+  npm install
   ```
 3. Create a .env file in the root directory of the project and add your API key for Financial Modeling Prep:
    ```bash
