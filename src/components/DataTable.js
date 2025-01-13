@@ -16,7 +16,6 @@ export default function DataTable(){
       fetch("https://financialmodelingprep.com/api/v3/income-statement/AAPL?period=annual&apikey=iTNKjhgjW7Byv4023weEz5wt6zxX4t8S")
       .then((response) => response.json())
       .then((data) => {
-        console.log("Data: ", data);
         setFinInfo(data);
         setFilteredData(data);
       })
@@ -54,18 +53,10 @@ export default function DataTable(){
         if (filters.date.from && filters.date.to) {
             const fromYear = parseInt(filters.date.from, 10);
             const toYear = parseInt(filters.date.to, 10);
-
-            console.log("FILTERS: ", filters);
-            // console.log("finInfo: ", finInfo);
             const result = filteredData.filter((item) => {
                 const itemYear = new Date(item.date).getFullYear();
-                console.log("itemYear: ", itemYear);
-                console.log("fromYear: ", fromYear);
-                console.log("toYear: ", toYear);
-                console.log(typeof(fromYear));
                 return itemYear >= fromYear && itemYear <= toYear;
             });
-            console.log("Result: ", result);
             setFilteredData(result);
         } else {
             setFilteredData(finInfo); // Show all data if no filter is applied
@@ -81,7 +72,6 @@ export default function DataTable(){
                 const itemNetIncome = item.netIncome;
                 return itemNetIncome >= fromNetIncome && itemNetIncome <= toNetIncome;
             })
-            console.log("Result: ", result);
             setFilteredData(result);
         }
         else{
@@ -97,10 +87,8 @@ export default function DataTable(){
 
             const result = filteredData.filter((item) => {
                 const itemRevenue = item.revenue;
-                console.log("itemRevenue: ", itemRevenue);
                 return itemRevenue >= fromRevenue && itemRevenue <= toRevenue;
             });
-            console.log("Result Revenue: ", result);
             setFilteredData(result); 
         }
         else{
@@ -146,83 +134,91 @@ export default function DataTable(){
 
 
     return(
-        <div class="flex flex-col">
-            <h2 className="text-lg font-bold mb-3">Filters:</h2>
-            <div className="flex flex-row">
-                <p>Filter by Date Range:</p>
-                {/* <FilterByRange/> */}
-                <FilterByRange
-                    label="Date Range"
-                    fromPlaceholder="From (e.g., 2021)"
-                    toPlaceholder="To (e.g., 2023)"
-                    fromValue = {filters.date.from}
-                    toValue = {filters.date.to}
-                    onFilter={(key, value) => handleFilterChange('date', key, value)}
-                    handleClick={filterByDate}
-                    handleRestore={() => handleRestore("date")}
-                />
-            </div>
-            <div className="flex flex-row mt-4">
-                <p>Filter by Revenue:</p>
-                {/* <FilterByRange/> */}
-                <FilterByRange
-                label="Revenue Range"
-                fromPlaceholder="From Revenue"
-                toPlaceholder="To Revenue"
-                fromValue = {filters.revenue.from}
-                toValue = {filters.revenue.to}
-                onFilter={(key, value) => handleFilterChange('revenue', key, value)}
-                handleClick={filterByRevenue}
-                handleRestore={() => handleRestore("revenue")}
-                />
-            </div>
-            <div className="flex flex-row mt-4">
-                <p>Filter by Net Income:</p>
-                {/* <FilterByRange/> */}
-                <FilterByRange
-                label="Net Income Range"
-                fromPlaceholder="From Net Income"
-                toPlaceholder="To Net Income"
-                fromValue = {filters.netIncome.from}
-                toValue = {filters.netIncome.to}
-                onFilter={(key, value) => handleFilterChange('netIncome', key, value)}
-                handleClick={filterByNetIncome}
-                handleRestore={() => handleRestore("netIncome")}
-                />
-            </div>
-            {/* <div className="mt-6">
-                <h2 className="text-lg font-bold">Applied Filters:</h2>
-                <pre>{JSON.stringify(filters, null, 2)}</pre>
-            </div> */}
-            <SortDropDown
-                sortByKey={(key, order) => sortByKey(key, order)}
-            />
-            <div class="flex items-center sm:justify-center ml-2 sm:ml-0 mt-4">
-                <table class="w-1 md:w-32 lg:w-full border-separate border border-slate-500">
-                    <thead>
-                      <tr>
-                        <th class="border border-slate-600">Date</th>
-                        <th class="border border-slate-600">Revenue</th>
-                        <th class="border border-slate-600">Net Income</th>
-                        <th class="border border-slate-600">Gross Profit</th>
-                        <th class="border border-slate-600">EPS(Earnings Per Share)</th>
-                        <th class="border border-slate-600">Operating Income</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    {filteredData && filteredData.map((row) => (
-                        <tr>
-                            <td class="border border-slate-700">{row.date}</td>
-                            <td class="border border-slate-700">{row.revenue}</td>
-                            <td class="border border-slate-700">{row.netIncome}</td>
-                            <td class="border border-slate-700">{row.grossProfit}</td>
-                            <td class="border border-slate-700">{row.eps}</td>
-                            <td class="border border-slate-700">{row.operatingIncome}</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+    <div className="flex flex-col space-y-6 mb-5">
+        <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-6">
+            <div className="flex-1">
+              <p className="font-semibold">Filter by Date Range:</p>
+              <FilterByRange
+                label="Date Range"
+                fromPlaceholder="From (e.g., 2021)"
+                toPlaceholder="To (e.g., 2023)"
+                fromValue={filters.date.from}
+                toValue={filters.date.to}
+                onFilter={(key, value) => handleFilterChange('date', key, value)}
+                handleClick={filterByDate}
+                handleRestore={() => handleRestore("date")}
+              />
             </div>
         </div>
+
+        <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-6">
+          <div className="flex-1">
+            <p className="font-semibold">Filter by Revenue:</p>
+            <FilterByRange
+              label="Revenue Range"
+              fromPlaceholder="From Revenue"
+              toPlaceholder="To Revenue"
+              fromValue={filters.revenue.from}
+              toValue={filters.revenue.to}
+              onFilter={(key, value) => handleFilterChange('revenue', key, value)}
+              handleClick={filterByRevenue}
+              handleRestore={() => handleRestore("revenue")}
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-6">
+          <div className="flex-1">
+            <p className="font-semibold">Filter by Net Income:</p>
+            <FilterByRange
+              label="Net Income Range"
+              fromPlaceholder="From Net Income"
+              toPlaceholder="To Net Income"
+              fromValue={filters.netIncome.from}
+              toValue={filters.netIncome.to}
+              onFilter={(key, value) => handleFilterChange('netIncome', key, value)}
+              handleClick={filterByNetIncome}
+              handleRestore={() => handleRestore("netIncome")}
+            />
+          </div>
+        </div>
+        <SortDropDown sortByKey={(key, order) => sortByKey(key, order)} />
+        <div className="flex items-center sm:justify-center ml-2 sm:ml-0 mt-4">
+        <div className="w-full overflow-x-auto">
+            <table className="w-full border-collapse border border-slate-300 text-sm shadow-lg rounded-lg">
+                <thead className="bg-[#162055] text-white">
+                    <tr>
+                      <th className="border border-slate-400 p-3 text-left whitespace-normal">Date</th>
+                      <th className="border border-slate-400 p-3 text-left whitespace-normal">Revenue</th>
+                      <th className="border border-slate-400 p-3 text-left whitespace-normal">Net Income</th>
+                      <th className="border border-slate-400 p-3 text-left whitespace-normal">Gross Profit</th>
+                      <th className="border border-slate-400 p-3 text-left whitespace-normal">EPS</th>
+                      <th className="border border-slate-400 p-3 text-left whitespace-normal">Operating Income</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredData &&
+                        filteredData.map((row, index) => (
+                            <tr
+                              key={index}
+                              className={`${
+                                index % 2 === 0 ? 'bg-slate-50' : 'bg-white'
+                              } hover:bg-blue-100 transition duration-150`}
+                            >
+                                <td className="border border-slate-300 p-3 whitespace-normal">{row.date}</td>
+                                <td className="border border-slate-300 p-3 whitespace-normal">{row.revenue}</td>
+                                <td className="border border-slate-300 p-3 whitespace-normal">{row.netIncome}</td>
+                                <td className="border border-slate-300 p-3 whitespace-normal">{row.grossProfit}</td>
+                                <td className="border border-slate-300 p-3 whitespace-normal">{row.eps}</td>
+                                <td className="border border-slate-300 p-3 whitespace-normal">{row.operatingIncome}</td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    </div>
     );
 }
