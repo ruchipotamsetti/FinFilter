@@ -1,6 +1,6 @@
-# Fin Filter
+# FinFilter - Finance Filters
 
-Fin Filter is a React application that allows users to filter and sort financial data for Apple Inc. (AAPL). The app provides an interactive interface to explore annual income statements, including revenue, net income, and other key financial metrics.
+FinFilter is a React application that allows users to filter and sort financial data for Apple Inc. (AAPL). The app provides an interactive interface to explore annual income statements, including revenue, net income, and other key financial metrics.
 
 # Link to Deployed App
 You can access the deployed version of the app at the following link: [Deployed App Link](https://fin-filter.vercel.app/)
