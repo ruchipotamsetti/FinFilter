@@ -13,15 +13,17 @@ export default function DataTable(){
     const [restoreFlag, setRestoreFlag] = useState(false);
 
     useEffect(() => {
-      fetch("https://financialmodelingprep.com/api/v3/income-statement/AAPL?period=annual&apikey=iTNKjhgjW7Byv4023weEz5wt6zxX4t8S")
-      .then((response) => response.json())
-      .then((data) => {
-        setFinInfo(data);
-        setFilteredData(data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
+        const apiKey = process.env.REACT_APP_API_KEY;
+        fetch(`https://financialmodelingprep.com/api/v3/income-statement/AAPL?period=annual&apikey=${apiKey}`)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            setFinInfo(data);
+            setFilteredData(data);
+        })  
+        .catch((err) => {
+          console.log(err.message);
+        })
     },[]);
 
     useEffect(() => {
