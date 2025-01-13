@@ -34,7 +34,7 @@ You can access the deployed version of the app at the following link: [Deployed 
      ```bash
      REACT_APP_API_KEY=your_api_key_here
      ```
-   You can obtain a free API key from [Finanacial Modeling Prep](https://site.financialmodelingprep.com/developer/docs#income-statements-financial-statements) 
+   You can obtain a free API key from [Financial Modeling Prep](https://site.financialmodelingprep.com/developer/docs#income-statements-financial-statements) 
 4. Start the development server:
     ```bash
     npm run start
