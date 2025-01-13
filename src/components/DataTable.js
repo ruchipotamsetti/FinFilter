@@ -11,6 +11,7 @@ export default function DataTable(){
     });
     const [filteredData, setFilteredData] = useState([]);
     const [restoreFlag, setRestoreFlag] = useState(false);
+    
 
     useEffect(() => {
         const apiKey = process.env.REACT_APP_API_KEY;
@@ -55,11 +56,15 @@ export default function DataTable(){
         if (filters.date.from && filters.date.to) {
             const fromYear = parseInt(filters.date.from, 10);
             const toYear = parseInt(filters.date.to, 10);
-            const result = filteredData.filter((item) => {
-                const itemYear = new Date(item.date).getFullYear();
-                return itemYear >= fromYear && itemYear <= toYear;
-            });
-            setFilteredData(result);
+
+            if(fromYear <= toYear){
+                const result = filteredData.filter((item) => {
+                    const itemYear = new Date(item.date).getFullYear();
+                    return itemYear >= fromYear && itemYear <= toYear;
+                });
+                setFilteredData(result);
+            }
+            
         } else {
             setFilteredData(finInfo); // Show all data if no filter is applied
         }
@@ -70,11 +75,13 @@ export default function DataTable(){
             const fromNetIncome = parseInt(filters.netIncome.from, 10);
             const toNetIncome = parseInt(filters.netIncome.to, 10);
 
-            const result = filteredData.filter((item) => {
-                const itemNetIncome = item.netIncome;
-                return itemNetIncome >= fromNetIncome && itemNetIncome <= toNetIncome;
-            })
-            setFilteredData(result);
+            if(fromNetIncome <= toNetIncome){
+                const result = filteredData.filter((item) => {
+                    const itemNetIncome = item.netIncome;
+                    return itemNetIncome >= fromNetIncome && itemNetIncome <= toNetIncome;
+                })
+                setFilteredData(result);
+            }
         }
         else{
             setFilteredData(finInfo); // Show all data if no filter is applied
@@ -87,11 +94,14 @@ export default function DataTable(){
             const fromRevenue = filters.revenue.from;
             const toRevenue = filters.revenue.to;
 
-            const result = filteredData.filter((item) => {
-                const itemRevenue = item.revenue;
-                return itemRevenue >= fromRevenue && itemRevenue <= toRevenue;
-            });
-            setFilteredData(result); 
+            if(fromRevenue <= toRevenue){
+                const result = filteredData.filter((item) => {
+                    const itemRevenue = item.revenue;
+                    return itemRevenue >= fromRevenue && itemRevenue <= toRevenue;
+                });
+                setFilteredData(result);
+            }
+             
         }
         else{
             setFilteredData(finInfo);
@@ -187,37 +197,44 @@ export default function DataTable(){
         <SortDropDown sortByKey={(key, order) => sortByKey(key, order)} />
         <div className="flex items-center sm:justify-center ml-2 sm:ml-0 mt-4">
         <div className="w-full overflow-x-auto">
-            <table className="w-full border-collapse border border-slate-300 text-sm shadow-lg rounded-lg">
-                <thead className="bg-[#162055] text-white">
-                    <tr>
-                      <th className="border border-slate-400 p-3 text-left whitespace-normal">Date</th>
-                      <th className="border border-slate-400 p-3 text-left whitespace-normal">Revenue</th>
-                      <th className="border border-slate-400 p-3 text-left whitespace-normal">Net Income</th>
-                      <th className="border border-slate-400 p-3 text-left whitespace-normal">Gross Profit</th>
-                      <th className="border border-slate-400 p-3 text-left whitespace-normal">EPS</th>
-                      <th className="border border-slate-400 p-3 text-left whitespace-normal">Operating Income</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredData &&
-                        filteredData.map((row, index) => (
-                            <tr
-                              key={index}
-                              className={`${
-                                index % 2 === 0 ? 'bg-slate-50' : 'bg-white'
-                              } hover:bg-blue-100 transition duration-150`}
-                            >
-                                <td className="border border-slate-300 p-3 whitespace-normal">{row.date}</td>
-                                <td className="border border-slate-300 p-3 whitespace-normal">{row.revenue}</td>
-                                <td className="border border-slate-300 p-3 whitespace-normal">{row.netIncome}</td>
-                                <td className="border border-slate-300 p-3 whitespace-normal">{row.grossProfit}</td>
-                                <td className="border border-slate-300 p-3 whitespace-normal">{row.eps}</td>
-                                <td className="border border-slate-300 p-3 whitespace-normal">{row.operatingIncome}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
+            {filteredData && filteredData.length > 0 ? (
+                <table className="w-full border-collapse border border-slate-300 text-sm shadow-lg rounded-lg">
+                    <thead className="bg-[#162055] text-white">
+                        <tr>
+                          <th className="border border-slate-400 p-3 text-left whitespace-normal">Date</th>
+                          <th className="border border-slate-400 p-3 text-left whitespace-normal">Revenue</th>
+                          <th className="border border-slate-400 p-3 text-left whitespace-normal">Net Income</th>
+                          <th className="border border-slate-400 p-3 text-left whitespace-normal">Gross Profit</th>
+                          <th className="border border-slate-400 p-3 text-left whitespace-normal">EPS</th>
+                          <th className="border border-slate-400 p-3 text-left whitespace-normal">Operating Income</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredData &&
+                            filteredData.map((row, index) => (
+                                <tr
+                                  key={index}
+                                  className={`${
+                                    index % 2 === 0 ? 'bg-slate-50' : 'bg-white'
+                                  } hover:bg-blue-100 transition duration-150`}
+                                >
+                                    <td className="border border-slate-300 p-3 whitespace-normal">{row.date}</td>
+                                    <td className="border border-slate-300 p-3 whitespace-normal">{row.revenue}</td>
+                                    <td className="border border-slate-300 p-3 whitespace-normal">{row.netIncome}</td>
+                                    <td className="border border-slate-300 p-3 whitespace-normal">{row.grossProfit}</td>
+                                    <td className="border border-slate-300 p-3 whitespace-normal">{row.eps}</td>
+                                    <td className="border border-slate-300 p-3 whitespace-normal">{row.operatingIncome}</td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            ):(
+                <div className="text-center text-gray-600 mt-4">
+                    No matching records found for the selected range.
+                </div>
+            )}
+            
         </div>
     </div>
 
