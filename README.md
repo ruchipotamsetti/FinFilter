@@ -8,6 +8,7 @@ You can access the deployed version of the app at the following link: [Deployed 
 ## Features
   - Filter financial data by date range, revenue, and net income
   - Sort data by date, revenue, and net income in ascending or descending order
+  - Included validations to check the values on given filter ranges
   - Responsive design for optimal viewing on various devices
 
 ## Instructions to Run Locally
