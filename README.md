@@ -31,9 +31,9 @@ You can access the deployed version of the app at the following link: [Deployed 
   npm install
   ```
 3. Create a .env file in the root directory of the project and add your API key for Financial Modeling Prep:
-   ```bash
-   REACT_APP_API_KEY=your_api_key_here
-   ```
+     ```bash
+     REACT_APP_API_KEY=your_api_key_here
+     ```
    You can obtain a free API key from [Finanacial Modeling Prep](https://site.financialmodelingprep.com/developer/docs#income-statements-financial-statements) 
 4. Start the development server:
     ```bash
